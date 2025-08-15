@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.dev/schemas/faction.schema.json",
+  "type": "object",
+  "required": ["id", "name"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

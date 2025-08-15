@@ -1,0 +1,24 @@
+{
+  "name": "@oracle-fury/tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "ofury": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "lint": "eslint --ext .ts src",
+    "format": "prettier -w \"src/**/*.{ts,js}\""
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "vitest": "^2.0.5"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.dev/schemas/event.schema.json",
+  "type": "object",
+  "required": ["id", "weight", "prompt"],
+  "properties": {
+    "id": { "type": "string" },
+    "weight": { "type": "number" },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "value"],
+        "properties": {
+          "type": { "type": "string", "enum": ["tag", "phase", "flag"] },
+          "value": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": ["type", "key", "value"],
+            "properties": {
+              "type": { "const": "flag" },
+              "key": { "type": "string" },
+              "value": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": ["type", "a", "b"],
+            "properties": {
+              "type": { "const": "relationship" },
+              "a": { "type": "string" },
+              "b": { "type": "string" },
+              "heat": { "type": "number" },
+              "bond": { "type": "number" }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "prompt": { "type": "string" }
+  },
+  "additionalProperties": false
+}

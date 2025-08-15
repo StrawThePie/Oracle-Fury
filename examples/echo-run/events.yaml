@@ -1,0 +1,20 @@
+- id: opening-dock
+  weight: 3
+  prompt: "The freighter Echo skips into orbit, its hull humming with residual jump heat."
+  conditions:
+    - { type: phase, value: Hyperspace }
+- id: customs-inspection
+  weight: 2
+  prompt: "Port Authority pings your transponder; a bored inspector requests a manifest."
+  conditions:
+    - { type: phase, value: Base }
+- id: campfire-tales
+  weight: 1
+  prompt: "Crew swap tales under the glow of the recycler, morale ticked up a notch."
+  conditions:
+    - { type: phase, value: Camp }
+- id: artifact-rumor
+  weight: 1
+  prompt: "A whisper about the protected Artifact X circulates among smugglers."
+  conditions:
+    - { type: tag, value: rumor-network }
