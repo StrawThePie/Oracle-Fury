@@ -1,0 +1,6 @@
+{
+  "id": "star-hauler-echo-run",
+  "version": "0.1.0",
+  "engineVersion": "^0.1.0",
+  "capabilities": ["events", "factions", "characters"]
+}

@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "moduleResolution": "Node",
+    "types": ["node"],
+    "paths": {
+      "@oracle-fury/core": ["../core/dist/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["test", "**/*.test.ts"],
+  "references": []
+}
