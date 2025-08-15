@@ -1,0 +1,7 @@
+packages:
+  - 'core'
+  - 'app'
+  - 'tools'
+  - 'examples'
+  - 'docs'
+  - 'server'

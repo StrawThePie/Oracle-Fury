@@ -1,0 +1,37 @@
+{
+  "name": "@oracle-fury/core",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./schemas/*": "./schemas/*.json"
+  },
+  "files": ["dist", "schemas"],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --reporter=dot",
+    "dev:test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier -w \"**/*.{ts,tsx,js,json,yml,yaml,md}\""
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

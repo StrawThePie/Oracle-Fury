@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WorldState",
+  "type": "object",
+  "required": ["phase", "tags", "flags", "relationships", "inventory"],
+  "properties": {
+    "phase": { "type": "string" },
+    "tags": { "type": "object", "additionalProperties": { "type": "boolean" } },
+    "flags": { "type": "object", "additionalProperties": true },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "bond": { "type": "integer", "minimum": -5, "maximum": 5 },
+          "heat": { "type": "integer", "minimum": -5, "maximum": 5 }
+        },
+        "required": ["bond", "heat"]
+      }
+    },
+    "inventory": { "type": "object", "additionalProperties": { "type": "integer" } }
+  }
+}

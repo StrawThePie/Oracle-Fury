@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EventTable",
+  "type": "object",
+  "required": ["id", "entries"],
+  "properties": {
+    "id": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string" },
+          "weight": { "type": "number" },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "key"],
+              "properties": {
+                "type": { "type": "string", "enum": ["tag", "phase", "flag"] },
+                "key": { "type": "string" },
+                "op": { "type": "string", "enum": ["eq", "neq"] },
+                "value": {}
+              }
+            }
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type"],
+              "properties": {
+                "type": { "type": "string", "enum": ["state", "relationship", "inventory", "flag"] },
+                "path": { "type": "string" },
+                "key": { "type": "string" },
+                "value": {},
+                "delta": { "type": "number" }
+              }
+            }
+          },
+          "prompt": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

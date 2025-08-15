@@ -1,0 +1,33 @@
+{
+  "name": "@oracle-fury/tools",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "ofury": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run --reporter=dot || true",
+    "dev:test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier -w \"**/*.{ts,tsx,js,json,yml,yaml,md}\""
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "commander": "^12.1.0",
+    "yaml": "^2.5.0",
+    "@oracle-fury/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}
