@@ -1,0 +1,271 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.com/schemas/event.schema.json",
+  "title": "Event",
+  "description": "An event in the Oracle Fury RPG system",
+  "type": "object",
+  "required": ["id", "title", "weight"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "description": "Unique identifier for the event"
+    },
+    "title": {
+      "type": "string",
+      "description": "Display title of the event"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description for GM/debugging"
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0,
+      "default": 1,
+      "description": "Selection weight for random events"
+    },
+    "priority": {
+      "type": "integer",
+      "default": 0,
+      "description": "Higher priority events are selected first"
+    },
+    "conditions": {
+      "type": "object",
+      "properties": {
+        "all": {
+          "$ref": "#/definitions/conditionArray"
+        },
+        "any": {
+          "$ref": "#/definitions/conditionArray"
+        },
+        "none": {
+          "$ref": "#/definitions/conditionArray"
+        }
+      },
+      "description": "Conditions that must be met for event to be available"
+    },
+    "narrative": {
+      "type": "object",
+      "required": ["intro"],
+      "properties": {
+        "intro": {
+          "type": "string",
+          "description": "Initial narrative text"
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional context for LLM generation"
+        }
+      }
+    },
+    "choices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/choice"
+      },
+      "description": "Player choices available in this event"
+    },
+    "outcomes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/outcome"
+      },
+      "description": "Possible outcomes if no choices"
+    },
+    "effects": {
+      "$ref": "#/definitions/effectList",
+      "description": "Immediate effects when event triggers"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "phase": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["narrative", "downtime", "combat", "any"]
+      },
+      "description": "Valid phases for this event"
+    },
+    "cooldown": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Turns before event can trigger again"
+    },
+    "maxOccurrences": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Maximum times this event can occur"
+    },
+    "moduleId": {
+      "type": "string",
+      "description": "Source module ID"
+    }
+  },
+  "definitions": {
+    "condition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["type", "target", "value"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["flag", "counter", "tag", "relationship", "phase", "location", "quest", "item", "character"]
+            },
+            "target": {
+              "type": "string"
+            },
+            "operator": {
+              "type": "string",
+              "enum": ["equals", "notEquals", "greater", "less", "greaterOrEqual", "lessOrEqual", "contains", "notContains"],
+              "default": "equals"
+            },
+            "value": {
+              "oneOf": [
+                { "type": "string" },
+                { "type": "number" },
+                { "type": "boolean" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "conditionArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/condition"
+      }
+    },
+    "choice": {
+      "type": "object",
+      "required": ["id", "text"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string",
+          "description": "Display text for the choice"
+        },
+        "conditions": {
+          "type": "object",
+          "properties": {
+            "all": { "$ref": "#/definitions/conditionArray" },
+            "any": { "$ref": "#/definitions/conditionArray" },
+            "none": { "$ref": "#/definitions/conditionArray" }
+          }
+        },
+        "probability": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "modifiers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/modifier"
+              }
+            }
+          }
+        },
+        "outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/outcome"
+          }
+        },
+        "effects": {
+          "$ref": "#/definitions/effectList"
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "required": ["id", "weight"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0
+        },
+        "narrative": {
+          "type": "string"
+        },
+        "effects": {
+          "$ref": "#/definitions/effectList"
+        },
+        "nextEventId": {
+          "type": "string",
+          "description": "Chain to another event"
+        }
+      }
+    },
+    "modifier": {
+      "type": "object",
+      "required": ["source", "value"],
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "What provides this modifier (skill, trait, etc)"
+        },
+        "value": {
+          "type": "number",
+          "description": "Modifier value (additive in logit space)"
+        },
+        "conditions": {
+          "type": "object",
+          "properties": {
+            "all": { "$ref": "#/definitions/conditionArray" },
+            "any": { "$ref": "#/definitions/conditionArray" },
+            "none": { "$ref": "#/definitions/conditionArray" }
+          }
+        }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["setFlag", "setCounter", "modifyCounter", "addTag", "removeTag", "modifyRelationship", "addItem", "removeItem", "modifyCredits", "damage", "heal", "addCondition", "removeCondition", "triggerEvent", "startQuest", "completeQuest", "moveLocation"]
+        },
+        "target": {
+          "type": "string"
+        },
+        "value": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "number" },
+            { "type": "boolean" }
+          ]
+        },
+        "amount": {
+          "type": "number"
+        }
+      }
+    },
+    "effectList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/effect"
+      }
+    }
+  }
+}

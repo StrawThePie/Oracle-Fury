@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.com/schemas/worldState.schema.json",
+  "title": "WorldState",
+  "description": "The complete state of the game world",
+  "type": "object",
+  "required": ["id", "turn", "phase", "flags", "counters", "activeModuleIds"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for this world state"
+    },
+    "turn": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Current game turn number"
+    },
+    "phase": {
+      "type": "string",
+      "enum": ["narrative", "downtime", "combat", "dialogue", "cutscene"],
+      "description": "Current game phase"
+    },
+    "downtimeState": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["hyperspace", "camp", "base"],
+          "description": "Current downtime location type"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location ID if applicable"
+        },
+        "actionsRemaining": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Downtime actions remaining"
+        },
+        "activeEvents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Active downtime event IDs"
+        }
+      }
+    },
+    "flags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "description": "Global boolean flags"
+    },
+    "counters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "description": "Global numeric counters"
+    },
+    "strings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Global string variables"
+    },
+    "activeModuleIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Currently loaded module IDs"
+    },
+    "currentLocationId": {
+      "type": "string",
+      "description": "Current location for the party"
+    },
+    "activeQuestIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Active quest IDs"
+    },
+    "completedQuestIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Completed quest IDs"
+    },
+    "eventHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["turn", "eventId", "outcome"],
+        "properties": {
+          "turn": {
+            "type": "integer"
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "History of resolved events"
+    },
+    "partyIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Character IDs in the active party"
+    },
+    "inventoryCapacity": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 50,
+      "description": "Max party inventory slots"
+    },
+    "credits": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 0,
+      "description": "Party credits/currency"
+    },
+    "shipState": {
+      "type": "object",
+      "properties": {
+        "fuel": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "hull": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "supplies": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cargo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["itemId", "quantity"],
+            "properties": {
+              "itemId": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      },
+      "description": "Ship status for space-faring campaigns"
+    },
+    "randomSeed": {
+      "type": "string",
+      "description": "Current RNG seed for deterministic generation"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.com/schemas/faction.schema.json",
+  "title": "Faction",
+  "description": "A faction or organization in the Oracle Fury RPG system",
+  "type": "object",
+  "required": ["id", "name", "reputation", "tags"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "description": "Unique identifier for the faction"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Display name of the faction"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Faction lore and description"
+    },
+    "reputation": {
+      "type": "integer",
+      "minimum": -100,
+      "maximum": 100,
+      "default": 0,
+      "description": "Player's reputation with this faction"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9_-]+$"
+      },
+      "uniqueItems": true,
+      "description": "Tags that affect interactions"
+    },
+    "relationships": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": -100,
+        "maximum": 100,
+        "description": "Relationship value with other faction ID"
+      },
+      "description": "Relationships with other factions (faction ID -> value)"
+    },
+    "headquarters": {
+      "type": "string",
+      "description": "Location ID of faction headquarters"
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "credits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "influence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "military": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "technology": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "leaderIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Character IDs of faction leaders"
+    },
+    "memberIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Character IDs of notable members"
+    },
+    "questlineIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Associated questline IDs"
+    },
+    "iconUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to faction icon/emblem"
+    }
+  }
+}
