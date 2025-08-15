@@ -1,0 +1,38 @@
+{
+  "name": "oracle-fury",
+  "version": "0.1.0",
+  "description": "Deterministic narrative RPG engine with relationships, downtime phases, and safety filters",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test",
+    "lint": "pnpm -r run lint",
+    "format": "pnpm -r run format",
+    "typecheck": "pnpm -r run typecheck",
+    "dev": "pnpm --filter @oracle-fury/app run dev",
+    "clean": "pnpm -r run clean && rm -rf node_modules"
+  },
+  "keywords": [
+    "rpg",
+    "narrative",
+    "typescript",
+    "monorepo"
+  ],
+  "author": "Oracle Fury Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.11.1",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "eslint": "^9.33.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.6.2"
+  }
+}

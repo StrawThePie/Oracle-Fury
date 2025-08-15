@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.com/schemas/relationship.schema.json",
+  "title": "Relationship",
+  "description": "A relationship between two characters in the Oracle Fury RPG system",
+  "type": "object",
+  "required": ["id", "characterA", "characterB", "heat", "bond", "type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "description": "Unique identifier for the relationship"
+    },
+    "characterA": {
+      "type": "string",
+      "description": "ID of the first character"
+    },
+    "characterB": {
+      "type": "string",
+      "description": "ID of the second character"
+    },
+    "heat": {
+      "type": "integer",
+      "minimum": -5,
+      "maximum": 5,
+      "default": 0,
+      "description": "Current emotional intensity/tension"
+    },
+    "bond": {
+      "type": "integer",
+      "minimum": -5,
+      "maximum": 5,
+      "default": 0,
+      "description": "Long-term connection strength"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["romantic", "friendship", "rivalry", "professional", "family", "mentor", "neutral"],
+      "description": "Primary relationship type"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9_-]+$"
+      },
+      "uniqueItems": true,
+      "description": "Additional relationship modifiers"
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "event", "heatChange", "bondChange"],
+        "properties": {
+          "timestamp": {
+            "type": "integer",
+            "description": "Game turn when this occurred"
+          },
+          "event": {
+            "type": "string",
+            "description": "Description of what happened"
+          },
+          "heatChange": {
+            "type": "integer",
+            "minimum": -5,
+            "maximum": 5
+          },
+          "bondChange": {
+            "type": "integer",
+            "minimum": -5,
+            "maximum": 5
+          }
+        }
+      },
+      "description": "History of significant relationship events"
+    },
+    "decayRate": {
+      "type": "object",
+      "properties": {
+        "heat": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.1,
+          "description": "Heat decay per downtime phase"
+        },
+        "bond": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.1,
+          "default": 0.01,
+          "description": "Bond decay per downtime phase"
+        }
+      }
+    },
+    "lastInteraction": {
+      "type": "integer",
+      "description": "Game turn of last interaction"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this relationship is currently active"
+    }
+  }
+}

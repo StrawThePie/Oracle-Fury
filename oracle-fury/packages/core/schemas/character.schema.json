@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.com/schemas/character.schema.json",
+  "title": "Character",
+  "description": "A character in the Oracle Fury RPG system",
+  "type": "object",
+  "required": ["id", "name", "type", "stats", "tags", "inventory"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "description": "Unique identifier for the character"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Display name of the character"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["player", "npc", "companion"],
+      "description": "Type of character"
+    },
+    "faction": {
+      "type": "string",
+      "description": "ID of the faction this character belongs to"
+    },
+    "stats": {
+      "type": "object",
+      "description": "Character statistics",
+      "required": ["health", "maxHealth", "energy", "maxEnergy"],
+      "properties": {
+        "health": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxHealth": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "energy": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxEnergy": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": -10,
+            "maximum": 10
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9_-]+$"
+      },
+      "uniqueItems": true,
+      "description": "Tags that affect interactions and events"
+    },
+    "inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "quantity"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "equipped": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "duration"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer",
+            "minimum": -1,
+            "description": "Duration in turns, -1 for permanent"
+          },
+          "stacks": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          }
+        }
+      },
+      "description": "Active conditions affecting the character"
+    },
+    "location": {
+      "type": "string",
+      "description": "Current location ID"
+    },
+    "biography": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Character background and description"
+    },
+    "portraitUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to character portrait image"
+    }
+  }
+}

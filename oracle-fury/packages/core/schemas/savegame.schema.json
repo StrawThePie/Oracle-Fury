@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.com/schemas/savegame.schema.json",
+  "title": "SaveGame",
+  "description": "A saved game state for Oracle Fury",
+  "type": "object",
+  "required": ["version", "timestamp", "worldState", "characters", "relationships", "factions"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Save format version (semver)"
+    },
+    "engineVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Engine version that created this save"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the save was created"
+    },
+    "name": {
+      "type": "string",
+      "description": "User-provided save name"
+    },
+    "thumbnail": {
+      "type": "string",
+      "description": "Base64 encoded thumbnail image"
+    },
+    "playtime": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total playtime in seconds"
+    },
+    "worldState": {
+      "$ref": "worldState.schema.json"
+    },
+    "characters": {
+      "type": "array",
+      "items": {
+        "$ref": "character.schema.json"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "relationship.schema.json"
+      }
+    },
+    "factions": {
+      "type": "array",
+      "items": {
+        "$ref": "faction.schema.json"
+      }
+    },
+    "eventCooldowns": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "description": "Turns remaining on cooldown"
+      }
+    },
+    "eventOccurrences": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "description": "Times this event has occurred"
+      }
+    },
+    "replayData": {
+      "type": "object",
+      "properties": {
+        "initialSeed": {
+          "type": "string"
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["turn", "eventId", "choiceId"],
+            "properties": {
+              "turn": {
+                "type": "integer"
+              },
+              "eventId": {
+                "type": "string"
+              },
+              "choiceId": {
+                "type": "string"
+              },
+              "seed": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "description": "Data for deterministic replay"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "difficulty": {
+          "type": "string"
+        },
+        "ironman": {
+          "type": "boolean"
+        },
+        "mods": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "version"],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

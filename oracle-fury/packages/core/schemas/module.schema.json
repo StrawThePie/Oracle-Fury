@@ -1,0 +1,174 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://oracle-fury.com/schemas/module.schema.json",
+  "title": "Module",
+  "description": "Module manifest for Oracle Fury content packs",
+  "type": "object",
+  "required": ["id", "version", "name", "engineVersion"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "description": "Unique module identifier"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Module version (semver)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the module"
+    },
+    "description": {
+      "type": "string",
+      "description": "Module description"
+    },
+    "author": {
+      "type": "string",
+      "description": "Module author(s)"
+    },
+    "engineVersion": {
+      "type": "string",
+      "pattern": "^(\\d+\\.\\d+\\.\\d+|\\^\\d+\\.\\d+\\.\\d+|~\\d+\\.\\d+\\.\\d+)$",
+      "description": "Compatible engine version(s)"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "version"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^(\\d+\\.\\d+\\.\\d+|\\^\\d+\\.\\d+\\.\\d+|~\\d+\\.\\d+\\.\\d+)$"
+          }
+        }
+      },
+      "description": "Required module dependencies"
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "saveCompatible": {
+          "type": "boolean",
+          "default": true,
+          "description": "Can be added to existing saves"
+        },
+        "multiplayerCompatible": {
+          "type": "boolean",
+          "default": false
+        },
+        "moddable": {
+          "type": "boolean",
+          "default": true
+        },
+        "experimental": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Path to event file"
+          }
+        },
+        "characters": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Path to character file"
+          }
+        },
+        "factions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Path to faction file"
+          }
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Path to location file"
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Path to item file"
+          }
+        },
+        "quests": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Path to quest file"
+          }
+        }
+      },
+      "description": "Content file paths relative to module root"
+    },
+    "assets": {
+      "type": "object",
+      "properties": {
+        "images": {
+          "type": "string",
+          "description": "Path to images directory"
+        },
+        "audio": {
+          "type": "string",
+          "description": "Path to audio directory"
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "description": "ID namespace for content"
+        },
+        "priority": {
+          "type": "integer",
+          "default": 0,
+          "description": "Load order priority"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Module tags for categorization"
+        }
+      }
+    },
+    "localization": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "type": "string",
+          "default": "en"
+        },
+        "supported": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
