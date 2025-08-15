@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SaveGame",
+  "type": "object",
+  "required": ["version", "seed", "state", "history"],
+  "properties": {
+    "version": { "type": "integer" },
+    "seed": { "oneOf": [{ "type": "integer" }, { "type": "string" }] },
+    "state": { "type": "object" },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "choice": { "type": "string" },
+          "meta": { "type": "object" }
+        },
+        "required": ["choice"]
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Character",
+  "type": "object",
+  "required": ["id", "name"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "factionId": { "type": "string" },
+    "stats": { "type": "object", "additionalProperties": { "type": "number" } }
+  }
+}

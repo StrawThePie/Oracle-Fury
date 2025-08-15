@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Relationship",
+  "type": "object",
+  "required": ["characterA", "characterB", "bond", "heat"],
+  "properties": {
+    "characterA": { "type": "string" },
+    "characterB": { "type": "string" },
+    "bond": { "type": "integer", "minimum": -5, "maximum": 5 },
+    "heat": { "type": "integer", "minimum": -5, "maximum": 5 }
+  }
+}
